@@ -4,7 +4,7 @@ let terminal;
 window.onload = function () {
     button = document.getElementById("button");
     terminal = document.getElementById("terminal");
-    button.addEventListener('pointerdown', connect)
+    button.addEventListener('click', connect)
 }
 
 function connect() {
