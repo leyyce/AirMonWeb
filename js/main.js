@@ -1,3 +1,5 @@
+const decoder = new TextDecoder('utf-8');
+
 let button;
 let terminal;
 
@@ -8,41 +10,48 @@ window.onload = function () {
 }
 
 function connect() {
-    terminal_log("Trying to connect...");
+    terminalLog("Trying to connect...");
     navigator.bluetooth.requestDevice({
         filters: [{
-            services: ["4fafc201-1fb5-459e-8fcc-c5c9c331914b"]
+            services: ["ba59dd58-afe1-4ae0-a151-802a39967e89"]
         }]
     })
         .then(device => {
-            terminal_log(`Success! Connected to device ${device.name}.`);
-            terminal_log("Connecting to GATT Server...");
+            terminalLog(`Success! Connected to device ${device.name}.`);
+            terminalLog("Connecting to GATT Server...");
+            device.addEventListener('gattserverdisconnected', onDisconnected);
             return device.gatt.connect();
         })
         .then(server => {
-            terminal_log("Success!");
-            return server.getPrimaryService("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+            terminalLog("Success!");
+            return server.getPrimaryService("ba59dd58-afe1-4ae0-a151-802a39967e89");
         })
         .then(service => {
-            return service.getCharacteristic("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+            return service.getCharacteristic("93260fdf-3636-4809-8abc-214217dd419e");
         })
         .then(characteristic => {
-            terminal_log("Trying to subscribe to characteristic...");
+            terminalLog("Trying to subscribe to characteristic...");
             return characteristic.startNotifications();
         })
         .then(characteristic => {
-            characteristic.addEventListener("characteristicvaluechanged", value_changed);
-            terminal_log("Success! Listening for changes...");
+            characteristic.addEventListener("characteristicvaluechanged", valueChanged);
+            terminalLog("Success! Listening for changes...");
         })
-        .catch(error => { terminal_log(error) });
+        .catch(error => { terminalLog(error) });
 }
 
-function value_changed(event) {
+function valueChanged(event) {
     const value = event.target.value;
-    terminal_log(value.getUint32(0));
+    // terminalLog(value.getUint32(0));
+    const valueString = decoder.decode(value);
+    terminalLog(valueString);
     terminal.scrollTop = terminal.scrollHeight;
 }
 
-function terminal_log(text) {
+function onDisconnected(event) {
+    terminalLog(`Device ${event.target.name} disconnected`);
+}
+
+function terminalLog(text) {
     terminal.value += text + "\n";
 }
