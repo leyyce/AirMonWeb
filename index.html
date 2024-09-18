@@ -2,18 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AirMon</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/main.js"></script>
 </head>
 <body>
-<div>
-    <label>
-        <textarea id="terminal"></textarea>
-    </label>
-</div>
-<div>
-    <button id="button">Connect</button>
-</div>
+<header>
+    <div>
+        <img src="media/logo.png" alt="Logo">
+        <h1>AirMon</h1>
+    </div>
+    <nav>
+        <p>Connection Status: <span id="connection_status">Disconnected</span></p>
+        <button id="connect">Connect</button>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <h2>BME680</h2>
+        <p>IAQ:</p>
+        <p id="bme680_iaq" class="value">Not connected...</p>
+        <p>IAQ Accuracy:</p>
+        <p id="bme680_iaq_accuracy" class="value">Not connected...</p>
+        <p>CO2 Equivalent:</p>
+        <p id="bme680_co2_equivalent" class="value">Not connected...</p>
+        <p>Breath Voc Equivalent:</p>
+        <p id="bme680_breath_voc_equivalent" class="value">Not connected...</p>
+        <p>Run-In Status:</p>
+        <p id="bme680_run_in_Status" class="value">Not connected...</p>
+        <p>Temperature:</p>
+        <p id="bme680_temperature" class="value">Not connected...</p>
+        <p>Humidity:</p>
+        <p id="bme680_humidity" class="value">Not connected...</p>
+    </div>
+    <div class="container">
+        <h2>CCS881</h2>
+        <p>eCO2:</p>
+        <p id="ccs811_eco2" class="value">Not connected...</p>
+        <p>Total Volatile Organic Compounds:</p>
+        <p id="ccs881_tvoc" class="value">Not connected...</p>
+    </div>
+    <div class="container">
+        <h2>SGP30</h2>
+        <p>eCO2:</p>
+        <p id="sgp30_eco2" class="value">Not connected...</p>
+        <p>Total Volatile Organic Compounds:</p>
+        <p id="sgp30_tvoc" class="value">Not connected...</p>
+    </div>
+</main>
+<footer>
+    <p>Made with <i class="icon-heart"></i> by Leya Wehner</p>
+    <span id="links">
+            <a href="https://github.com/leyyce" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+        </span>
+</footer>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
