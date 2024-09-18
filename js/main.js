@@ -47,7 +47,7 @@ function bme680ValueChanged(event) {
     const tokens = valueString.split(";")
     console.log(valueString);
     if (tokens.length > 1) {
-        document.getElementById("bme680_iaq").innerText = tokens[0];
+        document.getElementById("bme680_iaq").innerText = iaqToHumanReadable(parseFloat(tokens[0])) + " | " + tokens[0];
         document.getElementById("bme680_iaq_accuracy").innerText = accuracyNumToString(parseInt(tokens[1]));
         document.getElementById("bme680_co2_equivalent").innerText = tokens[2] + "ppm";
         document.getElementById("bme680_breath_voc_equivalent").innerText = tokens[3] + "ppm";
@@ -72,10 +72,12 @@ function ccs811ValueChanged(event) {
     console.log(valueString);
     if (tokens.length > 1) {
         document.getElementById("ccs811_eco2").innerText = tokens[0] + "ppm";
-        document.getElementById("ccs881_tvoc").innerText = tokens[1] + "ppb";
+        document.getElementById("ccs811_tvoc").innerText = tokens[1] + "ppb";
+        document.getElementById("ccs811_iaq").innerText = iaqToHumanReadable(parseFloat(tokens[2])) + " | " + tokens[2];
     } else {
         document.getElementById("ccs811_eco2").innerText = tokens[0];
-        document.getElementById("ccs881_tvoc").innerText = tokens[0];
+        document.getElementById("ccs811_tvoc").innerText = tokens[0];
+        document.getElementById("ccs811_iaq").innerText = tokens[0];
     }
 }
 
@@ -87,9 +89,11 @@ function sgp30ValueChanged(event) {
     if (tokens.length > 1) {
         document.getElementById("sgp30_eco2").innerText = tokens[0] + "ppm";
         document.getElementById("sgp30_tvoc").innerText = tokens[1] + "ppb";
+        document.getElementById("sgp30_iaq").innerText = iaqToHumanReadable(parseFloat(tokens[2])) + " | " + tokens[2];
     } else {
         document.getElementById("sgp30_eco2").innerText = tokens[0];
         document.getElementById("sgp30_tvoc").innerText = tokens[0];
+        document.getElementById("sgp30_iaq").innerText = tokens[0];
     }
 }
 
@@ -105,4 +109,15 @@ function accuracyNumToString(num) {
         case 2: return "average";
         default: return "high";
     }
+}
+
+function iaqToHumanReadable(iaq) {
+    if (iaq <= 50) return "Excellent";
+    if (iaq <= 100) return "Good";
+    if (iaq <= 150) return "Lightly polluted";
+    if (iaq <= 200) return "Moderately polluted";
+    if (iaq <= 250) return "Heavily polluted";
+    if (iaq <= 350) return "Severely polluted";
+    if (iaq > 351) return "Extremely polluted";
+    else return "Error: IAQ value out of bounds";
 }
