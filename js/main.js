@@ -129,6 +129,6 @@ function breezeIaqToHumanReadable(iaq) {
     if (iaq <= 3) return "Moderate";
     if (iaq <= 4) return "Poor";
     if (iaq <= 5) return "Very Poor";
-    if (iaq <= 6) return "Severe";
+    if (iaq <= 6) return "Unhealthy";
     else return "Error: IAQ value out of bounds";
 }
